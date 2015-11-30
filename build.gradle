@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'http://repo.jenkins-ci.org/releases/'
+        }
+    }
+    dependencies {
+        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.14.1'
+    }
+}
+
+apply plugin: 'org.jenkins-ci.jpi'
+apply plugin: 'java'
+
+
+group = "com.bertramlabs.plugins"
+version = "0.0.1-SNAPSHOT"    // Or whatever your version is.
+description = "Continuous Integration Jenkins plugin for the Morpheus Cloud Applicaiton Management Platform"
+targetCompatibility = '1.6'
+sourceCompatibility = '1.6'
+
+jenkinsPlugin {
+    coreVersion = '1.420'                                               // Version of Jenkins core this plugin depends on.
+    displayName = 'Morpheus'                // Human-readable name of plugin.
+    url = 'https://github.com/gomorpheus/morpheus-jenkins/wiki'   // URL for plugin on Jenkins wiki or elsewhere.
+    gitHubUrl = 'https://github.com/gomorpheus/morpheus-jenkins'              // Plugin URL on GitHub. Optional.
+    shortName = 'morpheus-jenkins'                                           // Plugin ID, defaults to the project name without trailing '-plugin'.
+
+    // The developers section is optional, and corresponds to the POM developers section.
+    developers {
+        developer {
+            id 'davydotcom'
+            name 'David Estes'
+            email 'destes@bcap.com'
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.1.0"
+}
