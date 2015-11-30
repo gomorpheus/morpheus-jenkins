@@ -7,21 +7,73 @@ import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.tasks.Builder;
 import hudson.tasks.BuildStepDescriptor;
+import hudson.FilePath;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.DataBoundConstructor;
 import net.sf.json.JSONObject;
+import com.morpheus.sdk.MorpheusClient;
+import com.morpheus.sdk.BasicCredentialsProvider;
+import com.morpheus.sdk.provisioning.*;
+import com.morpheus.sdk.deployment.AppDeploy;
+import com.morpheus.sdk.deployment.CreateDeployRequest;
+import com.morpheus.sdk.deployment.RunDeployRequest;
+import com.morpheus.sdk.deployment.RunDeployResponse;
+import com.morpheus.sdk.deployment.UploadFileRequest;
+import com.morpheus.sdk.deployment.CreateDeployResponse;
 
 public class MorpheusBuilder extends Builder {
+	protected String applianceUrl;
+	protected String username;
+	protected String password;
+	protected String instanceName;
+	protected String workingDirectory;
+	protected String includePattern;
+	protected String excludePattern;
+	protected BasicCredentialsProvider credentialsProvider;
 
 	@DataBoundConstructor
-	public MorpheusBuilder() {
-
+	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String workingDirectory, String includePattern, String excludePattern) {
+		this.applianceUrl = applianceUrl;
+		this.username = username;
+		this.password = password;
+		this.instanceName = instanceName;
+		this.workingDirectory = workingDirectory;
+		this.includePattern = includePattern;
+		this.excludePattern = excludePattern;
+		this.credentialsProvider = new BasicCredentialsProvider(username,password);
 	}
 
 
 	@Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
-    	return true;
+    	MorpheusClient client = new MorpheusClient(this.credentialsProvider).setEndpointUrl(this.applianceUrl);
+    	AppDeploy appDeploy = new AppDeploy();
+    	try {
+    		ListInstancesResponse listInstancesResponse = client.listInstances(new ListInstancesRequest().name(this.instanceName));
+	    	if(listInstancesResponse.instances != null && listInstancesResponse.instances.size() > 0) {
+	    		Long instanceId = listInstancesResponse.instances.get(0).id;
+	    		CreateDeployResponse response = client.createDeployment(new CreateDeployRequest().appDeploy(appDeploy).instanceId(instanceId));
+	    		Long appDeployId = response.appDeploy.id;
+	    		// Time to find the files to upload
+	    		FilePath rootDir = build.getWorkspace().child(workingDirectory);
+
+	    		FilePath[] matchedFiles = rootDir.list(includePattern, excludePattern);
+	    		for(int filesCounter = 0; filesCounter < matchedFiles.length; filesCounter++) {
+	    			FilePath currentFile = matchedFiles[filesCounter];
+	    			String destination = currentFile.toURI().relativize(rootDir.toURI()).getPath();
+	    			UploadFileRequest fileUploadRequest = new UploadFileRequest().appDeployId(appDeployId).inputStream(currentFile.read()).destination(destination);
+	    			client.uploadDeploymentFile(fileUploadRequest);
+	    		}
+	    		RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeploy(response.appDeploy));
+		    	return deployResponse.success;
+	    	} else {
+	    		return false;
+	    	}
+    	} catch(Exception ex) {
+    		return false;
+    	}
+    	
+    	
     }
 
     /**
@@ -58,7 +110,6 @@ public class MorpheusBuilder extends Builder {
          * <p>
          * If you don't want fields to be persisted, use <tt>transient</tt>.
          */
-        private boolean useFrench;
 
         public DescriptorImpl() {
             load();
@@ -69,7 +120,7 @@ public class MorpheusBuilder extends Builder {
          */
         @Override
         public String getDisplayName() {
-            return "Say hello world";
+            return "Morpheus Deployment";
         }
 
         /**
@@ -84,16 +135,10 @@ public class MorpheusBuilder extends Builder {
         public boolean configure(StaplerRequest staplerRequest, JSONObject json) throws FormException {
             // to persist global configuration information,
             // set that to properties and call save().
-            useFrench = json.getBoolean("useFrench");
+            // useFrench = json.getBoolean("useFrench");
             save();
             return true; // indicate that everything is good so far
         }
 
-        /**
-         * This method returns true if the global configuration says we should speak French.
-         */
-        public boolean useFrench() {
-            return useFrench;
-        }
     }
 }

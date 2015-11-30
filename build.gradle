@@ -12,6 +12,7 @@ buildscript {
 
 apply plugin: 'org.jenkins-ci.jpi'
 apply plugin: 'java'
+apply plugin: 'idea'
 
 
 group = "com.bertramlabs.plugins"
