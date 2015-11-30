@@ -60,16 +60,21 @@ public class MorpheusBuilder extends Builder {
 	    		FilePath[] matchedFiles = rootDir.list(includePattern, excludePattern);
 	    		for(int filesCounter = 0; filesCounter < matchedFiles.length; filesCounter++) {
 	    			FilePath currentFile = matchedFiles[filesCounter];
-	    			String destination = currentFile.toURI().relativize(rootDir.toURI()).getPath();
-	    			UploadFileRequest fileUploadRequest = new UploadFileRequest().appDeployId(appDeployId).inputStream(currentFile.read()).destination(destination);
-	    			client.uploadDeploymentFile(fileUploadRequest);
+                    if(!currentFile.isDirectory()) {
+                        String destination = rootDir.toURI().relativize(currentFile.getParent().toURI()).getPath();
+                        UploadFileRequest fileUploadRequest = new UploadFileRequest().appDeployId(appDeployId).inputStream(currentFile.read()).originalName(currentFile.getName()).destination(destination);
+                        client.uploadDeploymentFile(fileUploadRequest);    
+                    }
+	    			
 	    		}
 	    		RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeploy(response.appDeploy));
-		    	return deployResponse.success;
+		    	return true;
 	    	} else {
 	    		return false;
 	    	}
     	} catch(Exception ex) {
+    		System.out.println("Error Occurred During Morpheus Build Phase: " + ex.getMessage());
+    		ex.printStackTrace();
     		return false;
     	}
     	
