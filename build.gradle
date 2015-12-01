@@ -16,7 +16,7 @@ apply plugin: 'idea'
 
 
 group = "com.bertramlabs.plugins"
-version = "0.0.1-SNAPSHOT"    // Or whatever your version is.
+version = "0.1.1"    // Or whatever your version is.
 description = "Continuous Integration Jenkins plugin for the Morpheus Cloud Applicaiton Management Platform"
 targetCompatibility = '1.6'
 sourceCompatibility = '1.6'
@@ -40,8 +40,9 @@ jenkinsPlugin {
 
 repositories {
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.1.0"
+    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.1.1"
 }
