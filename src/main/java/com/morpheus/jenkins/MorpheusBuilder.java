@@ -48,6 +48,7 @@ public class MorpheusBuilder extends Builder {
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
     	MorpheusClient client = new MorpheusClient(this.credentialsProvider).setEndpointUrl(this.applianceUrl);
     	AppDeploy appDeploy = new AppDeploy();
+        System.out.println("Performing Morpheus Deploy");
     	try {
     		ListInstancesResponse listInstancesResponse = client.listInstances(new ListInstancesRequest().name(this.instanceName));
 	    	if(listInstancesResponse.instances != null && listInstancesResponse.instances.size() > 0) {

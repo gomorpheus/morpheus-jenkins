@@ -44,5 +44,5 @@ repositories {
 }
 
 dependencies {
-    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.1.1"
+    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.2.0"
 }
