@@ -43,6 +43,34 @@ public class MorpheusBuilder extends Builder {
 		this.credentialsProvider = new BasicCredentialsProvider(username,password);
 	}
 
+    public String getApplianceUrl() {
+        return this.applianceUrl;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getInstanceName() {
+        return this.instanceName;
+    }
+
+    public String getIncludePattern() {
+        return this.includePattern;
+    }
+
+    public String getExcludePattern() {
+        return this.excludePattern;
+    }
+
+    public String getWorkingDirectory() {
+        return this.workingDirectory;
+    }
+
 
 	@Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {

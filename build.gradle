@@ -16,13 +16,13 @@ apply plugin: 'idea'
 
 
 group = "com.bertramlabs.plugins"
-version = "0.1.1"    // Or whatever your version is.
+version = "0.1.2"    // Or whatever your version is.
 description = "Continuous Integration Jenkins plugin for the Morpheus Cloud Applicaiton Management Platform"
 targetCompatibility = '1.6'
 sourceCompatibility = '1.6'
 
 jenkinsPlugin {
-    coreVersion = '1.420'                                               // Version of Jenkins core this plugin depends on.
+    coreVersion = '1.596'                                               // Version of Jenkins core this plugin depends on.
     displayName = 'Morpheus'                // Human-readable name of plugin.
     url = 'https://github.com/gomorpheus/morpheus-jenkins/wiki'   // URL for plugin on Jenkins wiki or elsewhere.
     gitHubUrl = 'https://github.com/gomorpheus/morpheus-jenkins'              // Plugin URL on GitHub. Optional.
