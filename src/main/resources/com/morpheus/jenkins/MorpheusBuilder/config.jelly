@@ -1,5 +1,5 @@
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
-  <f:entry title="${%Morpheus applianceUrl}" field="applianceUrl">
+  <f:entry title="${%Morpheus applianceUrl}" field="applianceUrl" help="/plugin/morpheus-jenkins/help-applianceUrl.html">
         <f:textbox/>
   </f:entry>
   <f:entry title="${%Morpheus username}" field="username">
@@ -8,7 +8,10 @@
   <f:entry title="${%Morpheus password}" field="password">
         <f:password/>
   </f:entry>
-  <f:entry title="${%Morpheus instanceName}" field="instanceName">
+  <f:entry title="${%Morpheus instanceName}" field="instanceName" help="/plugin/morpheus-jenkins/help-instanceName.html">
+        <f:textbox/>
+  </f:entry>
+  <f:entry title="${%Morpheus artifactName}" field="artifactName" help="/plugin/morpheus-jenkins/help-artifactName.html">
         <f:textbox/>
   </f:entry>
   <f:entry title="${%Morpheus workingDirectory}" field="workingDirectory">
