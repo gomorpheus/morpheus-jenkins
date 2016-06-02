@@ -15,14 +15,14 @@ import com.morpheus.sdk.MorpheusClient;
 import com.morpheus.sdk.BasicCredentialsProvider;
 import com.morpheus.sdk.provisioning.*;
 import com.morpheus.sdk.deployment.AppDeploy;
-import com.morpheus.sdk.provisioning.Artifact;
-import com.morpheus.sdk.provisioning.ArtifactVersion;
-import com.morpheus.sdk.provisioning.CreateArtifactRequest;
-import com.morpheus.sdk.provisioning.CreateArtifactResponse;
-import com.morpheus.sdk.provisioning.CreateArtifactVersionRequest;
-import com.morpheus.sdk.provisioning.CreateArtifactVersionResponse;
-import com.morpheus.sdk.provisioning.ListArtifactsRequest;
-import com.morpheus.sdk.provisioning.ListArtifactsResponse;
+import com.morpheus.sdk.provisioning.Deployment;
+import com.morpheus.sdk.provisioning.DeploymentVersion;
+import com.morpheus.sdk.provisioning.CreateDeploymentRequest;
+import com.morpheus.sdk.provisioning.CreateDeploymentResponse;
+import com.morpheus.sdk.provisioning.CreateDeploymentVersionRequest;
+import com.morpheus.sdk.provisioning.CreateDeploymentVersionResponse;
+import com.morpheus.sdk.provisioning.ListDeploymentsRequest;
+import com.morpheus.sdk.provisioning.ListDeploymentsResponse;
 import com.morpheus.sdk.deployment.CreateDeployRequest;
 import com.morpheus.sdk.deployment.RunDeployRequest;
 import com.morpheus.sdk.deployment.RunDeployResponse;
@@ -34,19 +34,19 @@ public class MorpheusBuilder extends Builder {
 	protected String username;
 	protected String password;
 	protected String instanceName;
-	protected String artifactName;
+	protected String deploymentName;
 	protected String workingDirectory;
 	protected String includePattern;
 	protected String excludePattern;
 	protected BasicCredentialsProvider credentialsProvider;
 
 	@DataBoundConstructor
-	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String artifactName, String workingDirectory, String includePattern, String excludePattern) {
+	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String deploymentName, String workingDirectory, String includePattern, String excludePattern) {
 		this.applianceUrl = applianceUrl;
 		this.username = username;
 		this.password = password;
 		this.instanceName = instanceName;
-		this.artifactName = artifactName;
+		this.deploymentName = deploymentName;
 		this.workingDirectory = workingDirectory;
 		this.includePattern = includePattern;
 		this.excludePattern = excludePattern;
@@ -69,8 +69,8 @@ public class MorpheusBuilder extends Builder {
         return this.instanceName;
     }
 
-    public String getArtifactName() {
-        return this.artifactName;
+    public String getDeploymentName() {
+        return this.deploymentName;
     }
 
     public String getIncludePattern() {
@@ -92,24 +92,24 @@ public class MorpheusBuilder extends Builder {
     	AppDeploy appDeploy = new AppDeploy();
         System.out.println("Performing Morpheus Deploy");
     	try {
-            // Get or create the artifact specified
-            ListArtifactsResponse listArtifactsResponse = client.listArtifacts(new ListArtifactsRequest().name(this.artifactName));
-            Long artifactId = null;
-            if(listArtifactsResponse.artifacts.size() == 0) {
-                Artifact artifact = new Artifact();
-                artifact.name = this.artifactName;
-                artifact.description = this.artifactName + " - Created by Morpheus Jenkins Plugin";
-                CreateArtifactResponse createArtifactResponse = client.createArtifact(new CreateArtifactRequest().artifact(artifact));
-                artifactId = createArtifactResponse.artifact.id;
+            // Get or create the deployment specified
+            ListDeploymentsResponse listDeploymentsResponse = client.listDeployments(new ListDeploymentsRequest().name(this.deploymentName));
+            Long deploymentId = null;
+            if(listDeploymentsResponse.deployments.size() == 0) {
+                Deployment deployment = new Deployment();
+                deployment.name = this.deploymentName;
+                deployment.description = this.deploymentName + " - Created by Morpheus Jenkins Plugin";
+                CreateDeploymentResponse createDeploymentResponse = client.createDeployment(new CreateDeploymentRequest().deployment(deployment));
+                deploymentId = createDeploymentResponse.deployment.id;
             } else {
-                artifactId = listArtifactsResponse.artifacts.get(0).id;
+                deploymentId = listDeploymentsResponse.deployments.get(0).id;
             }
 
-            // Create a new artifact version
-            ArtifactVersion artifactVersion = new ArtifactVersion();
-            artifactVersion.userVersion = Integer.toString(build.number);
-            CreateArtifactVersionResponse createArtifactVersionResponse = client.createArtifactVersion(new CreateArtifactVersionRequest().artifactId(artifactId).artifactVersion(artifactVersion));
-            Long artifactVersionId = createArtifactVersionResponse.artifactVersion.id;
+            // Create a new deployment version
+            DeploymentVersion deploymentVersion = new DeploymentVersion();
+            deploymentVersion.userVersion = Integer.toString(build.number);
+            CreateDeploymentVersionResponse createDeploymentVersionResponse = client.createDeploymentVersion(new CreateDeploymentVersionRequest().deploymentId(deploymentId).deploymentVersion(deploymentVersion));
+            Long deploymentVersionId = createDeploymentVersionResponse.deploymentVersion.id;
 
             ListInstancesResponse listInstancesResponse = client.listInstances(new ListInstancesRequest().name(this.instanceName));
 	    	if(listInstancesResponse.instances != null && listInstancesResponse.instances.size() > 0) {
@@ -121,13 +121,13 @@ public class MorpheusBuilder extends Builder {
                     FilePath currentFile = matchedFiles[filesCounter];
                     if(!currentFile.isDirectory()) {
                         String destination = rootDir.toURI().relativize(currentFile.getParent().toURI()).getPath();
-                        UploadFileRequest fileUploadRequest = new UploadFileRequest().artifactId(artifactId).artifactVersionId(artifactVersionId).inputStream(currentFile.read()).originalName(currentFile.getName()).destination(destination);
-                        client.uploadArtifactVersionFile(fileUploadRequest);
+                        UploadFileRequest fileUploadRequest = new UploadFileRequest().deploymentId(deploymentId).deploymentVersionId(deploymentVersionId).inputStream(currentFile.read()).originalName(currentFile.getName()).destination(destination);
+                        client.uploadDeploymentVersionFile(fileUploadRequest);
                     }
                 }
 
                 Long instanceId = listInstancesResponse.instances.get(0).id;
-                appDeploy.versionId = artifactVersionId;
+                appDeploy.versionId = deploymentVersionId;
                 appDeploy.instanceId = instanceId;
                 CreateDeployResponse createDeployResponse = client.createDeployment(new CreateDeployRequest().appDeploy(appDeploy));
                 Long appDeployId = createDeployResponse.appDeploy.id;

@@ -11,7 +11,7 @@
   <f:entry title="${%Morpheus instanceName}" field="instanceName" help="/plugin/morpheus-jenkins/help-instanceName.html">
         <f:textbox/>
   </f:entry>
-  <f:entry title="${%Morpheus artifactName}" field="artifactName" help="/plugin/morpheus-jenkins/help-artifactName.html">
+  <f:entry title="${%Morpheus deploymentName}" field="deploymentName" help="/plugin/morpheus-jenkins/help-deploymentName.html">
         <f:textbox/>
   </f:entry>
   <f:entry title="${%Morpheus workingDirectory}" field="workingDirectory">
