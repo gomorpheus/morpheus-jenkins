@@ -131,7 +131,9 @@ public class MorpheusBuilder extends Builder {
                 appDeploy.instanceId = instanceId;
                 CreateDeployResponse createDeployResponse = client.createDeployment(new CreateDeployRequest().appDeploy(appDeploy));
                 Long appDeployId = createDeployResponse.appDeploy.id;
-                RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeployId(appDeployId));
+                if(createDeployResponse.appDeploy.status == "staged") {
+                    RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeployId(appDeployId));
+                }
                 return true;
             } else {
                return false;
