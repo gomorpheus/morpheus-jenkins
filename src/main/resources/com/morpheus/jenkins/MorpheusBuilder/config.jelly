@@ -14,6 +14,9 @@
   <f:entry title="${%Morpheus deploymentName}" field="deploymentName" help="/plugin/morpheus-jenkins/help-deploymentName.html">
         <f:textbox/>
   </f:entry>
+  <f:entry title="${%Morpheus userVersion}" field="userVersion" help="/plugin/morpheus-jenkins/help-userVersion.html">
+        <f:textbox/>
+  </f:entry>
   <f:entry title="${%Morpheus workingDirectory}" field="workingDirectory">
         <f:textbox/>
   </f:entry>

@@ -1,52 +1,48 @@
 package com.morpheus.jenkins;
 
-import hudson.Launcher;
-import hudson.Extension;
-import hudson.model.Build;
-import hudson.model.BuildListener;
-import hudson.model.AbstractBuild;
-import hudson.tasks.Builder;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.FilePath;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.DataBoundConstructor;
-import net.sf.json.JSONObject;
-import com.morpheus.sdk.MorpheusClient;
 import com.morpheus.sdk.BasicCredentialsProvider;
+import com.morpheus.sdk.MorpheusClient;
+import com.morpheus.sdk.deployment.*;
 import com.morpheus.sdk.provisioning.*;
-import com.morpheus.sdk.deployment.AppDeploy;
-import com.morpheus.sdk.provisioning.Deployment;
-import com.morpheus.sdk.provisioning.DeploymentVersion;
-import com.morpheus.sdk.provisioning.CreateDeploymentRequest;
-import com.morpheus.sdk.provisioning.CreateDeploymentResponse;
-import com.morpheus.sdk.provisioning.CreateDeploymentVersionRequest;
-import com.morpheus.sdk.provisioning.CreateDeploymentVersionResponse;
-import com.morpheus.sdk.provisioning.ListDeploymentsRequest;
-import com.morpheus.sdk.provisioning.ListDeploymentsResponse;
-import com.morpheus.sdk.deployment.CreateDeployRequest;
-import com.morpheus.sdk.deployment.RunDeployRequest;
-import com.morpheus.sdk.deployment.RunDeployResponse;
-import com.morpheus.sdk.provisioning.UploadFileRequest;
-import com.morpheus.sdk.deployment.CreateDeployResponse;
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.AbstractBuild;
+import hudson.model.BuildListener;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Builder;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.StaplerRequest;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+
+@Slf4j
 public class MorpheusBuilder extends Builder {
+
 	protected String applianceUrl;
 	protected String username;
 	protected String password;
 	protected String instanceName;
 	protected String deploymentName;
+	protected String userVersion;
 	protected String workingDirectory;
 	protected String includePattern;
 	protected String excludePattern;
 	protected BasicCredentialsProvider credentialsProvider;
 
 	@DataBoundConstructor
-	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String deploymentName, String workingDirectory, String includePattern, String excludePattern) {
+	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String deploymentName, String userVersion, String workingDirectory, String includePattern, String excludePattern) {
 		this.applianceUrl = applianceUrl;
 		this.username = username;
 		this.password = password;
 		this.instanceName = instanceName;
 		this.deploymentName = deploymentName;
+        this.userVersion = userVersion;
 		this.workingDirectory = workingDirectory;
 		this.includePattern = includePattern;
 		this.excludePattern = excludePattern;
@@ -73,6 +69,10 @@ public class MorpheusBuilder extends Builder {
         return this.deploymentName;
     }
 
+    public String getUserVersion() {
+        return this.userVersion;
+    }
+
     public String getIncludePattern() {
         return this.includePattern;
     }
@@ -88,9 +88,10 @@ public class MorpheusBuilder extends Builder {
 
 	@Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
+        log.debug("Performing Morpheus Client authentication this.applianceUrl :: {}", this.applianceUrl);
     	MorpheusClient client = new MorpheusClient(this.credentialsProvider).setEndpointUrl(this.applianceUrl);
     	AppDeploy appDeploy = new AppDeploy();
-        System.out.println("Performing Morpheus Deploy");
+        log.info("Performing Morpheus Deploy");
     	try {
             // Get or create the deployment specified
             ListDeploymentsResponse listDeploymentsResponse = client.listDeployments(new ListDeploymentsRequest().name(this.deploymentName));
@@ -102,44 +103,72 @@ public class MorpheusBuilder extends Builder {
                 CreateDeploymentResponse createDeploymentResponse = client.createDeployment(new CreateDeploymentRequest().deployment(deployment));
                 deploymentId = createDeploymentResponse.deployment.id;
             } else {
-                deploymentId = listDeploymentsResponse.deployments.get(0).id;
+                Deployment deployment = listDeploymentsResponse.deployments.get(0);
+                log.info("deployment :: {}", deployment);
+                deploymentId = deployment.id;
             }
 
             // Create a new deployment version
             DeploymentVersion deploymentVersion = new DeploymentVersion();
-            deploymentVersion.userVersion = Integer.toString(build.number);
+            log.info("this.userVersion :: {}", this.userVersion);
+            EnvVars variables = build.getEnvironment(listener);
+            String deployVersion = Integer.toString(build.number);
+            String gitCommit = variables.get("GIT_COMMIT");
+            if(this.userVersion != null && !this.userVersion.trim().isEmpty()) {
+                deployVersion = this.userVersion;
+            } else if(gitCommit != null && !gitCommit.trim().isEmpty()) {
+                log.info("gitCommit :: {}", gitCommit);
+                deployVersion = gitCommit;
+            }
+            deploymentVersion.userVersion = deployVersion;
+            log.info("deploymentVersion.userVersion :: {}", deploymentVersion.userVersion);
+
             CreateDeploymentVersionResponse createDeploymentVersionResponse = client.createDeploymentVersion(new CreateDeploymentVersionRequest().deploymentId(deploymentId).deploymentVersion(deploymentVersion));
             Long deploymentVersionId = createDeploymentVersionResponse.deploymentVersion.id;
 
-            ListInstancesResponse listInstancesResponse = client.listInstances(new ListInstancesRequest().name(this.instanceName));
-	    	if(listInstancesResponse.instances != null && listInstancesResponse.instances.size() > 0) {
-                // Upload the files
-                FilePath rootDir = build.getWorkspace().child(workingDirectory);
+            // Upload the files
+            FilePath rootDir = build.getWorkspace().child(workingDirectory);
 
-                FilePath[] matchedFiles = rootDir.list(includePattern, excludePattern);
-                for(int filesCounter = 0; filesCounter < matchedFiles.length; filesCounter++) {
-                    FilePath currentFile = matchedFiles[filesCounter];
-                    if(!currentFile.isDirectory()) {
-                        String destination = rootDir.toURI().relativize(currentFile.getParent().toURI()).getPath();
-                        UploadFileRequest fileUploadRequest = new UploadFileRequest().deploymentId(deploymentId).deploymentVersionId(deploymentVersionId).inputStream(currentFile.read()).originalName(currentFile.getName()).destination(destination);
-                        client.uploadDeploymentVersionFile(fileUploadRequest);
+            FilePath[] matchedFiles = rootDir.list(includePattern, excludePattern);
+            for(int filesCounter = 0; filesCounter < matchedFiles.length; filesCounter++) {
+                FilePath currentFile = matchedFiles[filesCounter];
+                if(!currentFile.isDirectory()) {
+                    String destination = rootDir.toURI().relativize(currentFile.getParent().toURI()).getPath();
+                    UploadFileRequest fileUploadRequest = new UploadFileRequest().deploymentId(deploymentId).deploymentVersionId(deploymentVersionId).inputStream(currentFile.read()).originalName(currentFile.getName()).destination(destination);
+                    client.uploadDeploymentVersionFile(fileUploadRequest);
+                }
+            }
+
+            log.info("this.instanceName :: {}", this.instanceName);
+            if(this.instanceName != null && !this.instanceName.trim().isEmpty()) {
+                ListInstancesResponse listInstancesResponse = client.listInstances(new ListInstancesRequest().name(this.instanceName));
+                log.info("listInstancesResponse.instances :: {}", listInstancesResponse.instances);
+                if(listInstancesResponse.instances != null && listInstancesResponse.instances.size() > 0) {
+                    log.info("listInstancesResponse.instances.size() :: {}", listInstancesResponse.instances.size());
+                    Long instanceId = listInstancesResponse.instances.get(0).id;
+                    log.info("listInstancesResponse.instances.get(0) :: {}", listInstancesResponse.instances.get(0));
+                    log.info("instanceId :: {}", instanceId);
+                    appDeploy.versionId = deploymentVersionId;
+                    appDeploy.instanceId = instanceId;
+                    log.info("appDeploy :: {}", appDeploy);
+
+                    CreateDeployResponse createDeployResponse = client.createDeployment(new CreateDeployRequest().appDeploy(appDeploy));
+                    log.info("createDeployResponse :: {}", createDeployResponse);
+                    Long appDeployId = createDeployResponse.appDeploy.id;
+                    if(createDeployResponse.appDeploy.status == "staged") {
+                        RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeployId(appDeployId));
+                        log.info("deployResponse :: {}", deployResponse);
                     }
+                    return true;
+                } else {
+                    return false;
                 }
-
-                Long instanceId = listInstancesResponse.instances.get(0).id;
-                appDeploy.versionId = deploymentVersionId;
-                appDeploy.instanceId = instanceId;
-                CreateDeployResponse createDeployResponse = client.createDeployment(new CreateDeployRequest().appDeploy(appDeploy));
-                Long appDeployId = createDeployResponse.appDeploy.id;
-                if(createDeployResponse.appDeploy.status == "staged") {
-                    RunDeployResponse deployResponse = client.runDeploy(new RunDeployRequest().appDeployId(appDeployId));
-                }
-                return true;
             } else {
-               return false;
+                log.info("this.instanceName was not set. Ignoring rest of the deployment");
+                return true;
             }
     	} catch(Exception ex) {
-    		System.out.println("Error Occurred During Morpheus Build Phase: " + ex.getMessage());
+    		log.error("Error Occurred During Morpheus Build Phase :: {}", ex.getMessage());
     		ex.printStackTrace();
     		return false;
     	}
@@ -209,5 +238,24 @@ public class MorpheusBuilder extends Builder {
             return true; // indicate that everything is good so far
         }
 
+    }
+
+    private void printOutEnvVariables(AbstractBuild build, BuildListener listener) {
+        try {
+            EnvVars variables = build.getEnvironment(listener);
+            Iterator<String> itr = variables.keySet().iterator();
+
+            while (itr.hasNext())
+            {
+                Object key = itr.next();
+                Object value = variables.get(key);
+
+                log.info("{} = {}", key, value);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
