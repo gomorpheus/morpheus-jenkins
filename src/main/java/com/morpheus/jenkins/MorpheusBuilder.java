@@ -1,8 +1,10 @@
 package com.morpheus.jenkins;
 
+import com.morpheus.sdk.AccessTokenProvider;
 import com.morpheus.sdk.BasicCredentialsProvider;
 import com.morpheus.sdk.MorpheusClient;
 import com.morpheus.sdk.deployment.*;
+import com.morpheus.sdk.internal.CredentialsProvider;
 import com.morpheus.sdk.provisioning.*;
 import hudson.EnvVars;
 import hudson.Extension;
@@ -27,26 +29,29 @@ public class MorpheusBuilder extends Builder {
 	protected String applianceUrl;
 	protected String username;
 	protected String password;
+	protected String accessToken;
 	protected String instanceName;
 	protected String deploymentName;
 	protected String userVersion;
 	protected String workingDirectory;
 	protected String includePattern;
 	protected String excludePattern;
-	protected BasicCredentialsProvider credentialsProvider;
+	protected BasicCredentialsProvider basicCredentialsProvider;
+	protected AccessTokenProvider accessTokenProvider;
+	protected CredentialsProvider credentialsProvider;
 
 	@DataBoundConstructor
-	public MorpheusBuilder(String applianceUrl, String username, String password, String instanceName, String deploymentName, String userVersion, String workingDirectory, String includePattern, String excludePattern) {
+	public MorpheusBuilder(String applianceUrl, String username, String password, String accessToken, String instanceName, String deploymentName, String userVersion, String workingDirectory, String includePattern, String excludePattern) {
 		this.applianceUrl = applianceUrl;
 		this.username = username;
 		this.password = password;
+		this.accessToken = accessToken;
 		this.instanceName = instanceName;
 		this.deploymentName = deploymentName;
         this.userVersion = userVersion;
 		this.workingDirectory = workingDirectory;
 		this.includePattern = includePattern;
 		this.excludePattern = excludePattern;
-		this.credentialsProvider = new BasicCredentialsProvider(username,password);
 	}
 
     public String getApplianceUrl() {
@@ -85,13 +90,22 @@ public class MorpheusBuilder extends Builder {
         return this.workingDirectory;
     }
 
+    public String getAccessToken() {
+        return this.accessToken;
+    }
 
 	@Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         log.debug("Performing Morpheus Client authentication this.applianceUrl :: {}", this.applianceUrl);
+        log.info("this.accessToken :: {}", this.accessToken);
+        if(this.accessToken != null && !this.accessToken.trim().isEmpty()) {
+            this.credentialsProvider = new AccessTokenProvider(this.accessToken);
+        } else {
+            this.credentialsProvider = new BasicCredentialsProvider(this.username, this.password);
+        }
     	MorpheusClient client = new MorpheusClient(this.credentialsProvider).setEndpointUrl(this.applianceUrl);
     	AppDeploy appDeploy = new AppDeploy();
-        log.info("Performing Morpheus Deploy");
+        log.info("Performing Morpheus Deploy for {}", this.deploymentName);
     	try {
             // Get or create the deployment specified
             ListDeploymentsResponse listDeploymentsResponse = client.listDeployments(new ListDeploymentsRequest().name(this.deploymentName));
