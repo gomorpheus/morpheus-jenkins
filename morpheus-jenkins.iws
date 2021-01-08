@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db93cf6f-b4ce-4671-8eb8-2455c3a92ee0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/morpheus-jenkins.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/morpheus-jenkins.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/morpheus-jenkins.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/morpheus-jenkins.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/morpheus-jenkins.iws" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/morpheus/jenkins/MorpheusBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/morpheus/jenkins/MorpheusBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/morpheus/jenkins/MorpheusBuilder/config.jelly" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/morpheus/jenkins/MorpheusBuilder/config.jelly" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/morpheus/jenkins/MorpheusBuilder/config_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/morpheus/jenkins/MorpheusBuilder/config_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/help-instanceName.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/help-instanceName.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,30 +93,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build setup" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="documentation" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="help" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="jenkins server" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
               </path>
               <path>
@@ -132,17 +107,19 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="morpheus-jenkins" type="f1a62948:ProjectNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -193,7 +170,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/com/morpheus/jenkins/MorpheusBuilder" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.morpheus-jenkins [installJenkinsServerPlugins]">
+  <component name="RunManager" selected="Gradle.morpheus-jenkins [assemble]">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -274,7 +251,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="morpheus-jenkins [generateJenkinsServerHpl]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="morpheus-jenkins [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -285,28 +262,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="generateJenkinsServerHpl" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="morpheus-jenkins [installJenkinsServerPlugins]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="installJenkinsServerPlugins" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -328,6 +284,27 @@
         <option name="taskNames">
           <list>
             <option value="jpi" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="morpheus-jenkins [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -362,11 +339,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.morpheus-jenkins [installJenkinsServerPlugins]" />
-        <item itemvalue="Gradle.morpheus-jenkins [generateJenkinsServerHpl]" />
         <item itemvalue="Gradle.morpheus-jenkins [assemble]" />
-        <item itemvalue="Gradle.morpheus-jenkins [build]" />
+        <item itemvalue="Gradle.morpheus-jenkins [test]" />
         <item itemvalue="Gradle.morpheus-jenkins [jpi]" />
+        <item itemvalue="Gradle.morpheus-jenkins [build]" />
+        <item itemvalue="Gradle.morpheus-jenkins [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -397,6 +374,12 @@
       <workItem from="1608180432829" duration="1113000" />
       <workItem from="1608222476995" duration="516000" />
       <workItem from="1608224073451" duration="17157000" />
+      <workItem from="1608311486350" duration="533000" />
+      <workItem from="1608954873676" duration="54000" />
+      <workItem from="1609801729177" duration="1929000" />
+      <workItem from="1609868194763" duration="18000" />
+      <workItem from="1609868234094" duration="14000" />
+      <workItem from="1610041559104" duration="10457000" />
     </task>
     <servers />
   </component>

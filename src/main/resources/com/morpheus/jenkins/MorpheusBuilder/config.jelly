@@ -1,20 +1,17 @@
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson">
-  <f:entry title="${%Morpheus applianceUrl}" field="applianceUrl" help="/plugin/morpheus-jenkins/help-applianceUrl.html">
+  <f:entry title="${%Morpheus applianceUrl}" field="applianceUrl" help="/plugin/morpheus-deployment/help-applianceUrl.html">
         <f:textbox/>
   </f:entry>
-  <f:entry title="${%Morpheus username}" field="username">
+  <f:entry title="${%Morpheus accessToken}" field="accessToken">
+        <f:textbox />
+  </f:entry>
+  <f:entry title="${%Morpheus deploymentName}" field="deploymentName" help="/plugin/morpheus-deployment/help-deploymentName.html">
         <f:textbox/>
   </f:entry>
-  <f:entry title="${%Morpheus password}" field="password">
-        <f:password/>
-  </f:entry>
-  <f:entry title="${%Morpheus instanceName}" field="instanceName" help="/plugin/morpheus-jenkins/help-instanceName.html">
+  <f:entry title="${%Morpheus userVersion}" field="userVersion" help="/plugin/morpheus-deployment/help-userVersion.html">
         <f:textbox/>
   </f:entry>
-  <f:entry title="${%Morpheus deploymentName}" field="deploymentName" help="/plugin/morpheus-jenkins/help-deploymentName.html">
-        <f:textbox/>
-  </f:entry>
-  <f:entry title="${%Morpheus userVersion}" field="userVersion" help="/plugin/morpheus-jenkins/help-userVersion.html">
+  <f:entry title="${%Morpheus instanceName}" field="instanceName" help="/plugin/morpheus-deployment/help-instanceName.html">
         <f:textbox/>
   </f:entry>
   <f:entry title="${%Morpheus workingDirectory}" field="workingDirectory">
