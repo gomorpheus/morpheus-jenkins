@@ -15,15 +15,6 @@
         <outputRelativeToContentRoot value="true" />
         <option name="sezpoz.quiet" value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.16/6dc192c7f93ec1853f70d59d8a6dcf94eb42866/lombok-1.18.16.jar" />
-        </processorPath>
-        <module name="morpheus-jenkins.test" />
-      </profile>
-      <profile name="Gradle Imported" enabled="true">
-        <outputRelativeToContentRoot value="true" />
-        <option name="sezpoz.quiet" value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.16/6dc192c7f93ec1853f70d59d8a6dcf94eb42866/lombok-1.18.16.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jenkins-ci.main/jenkins-core/2.249.2/499b4a51559e5ccad14b9dcaf597ee0c109a183/jenkins-core-2.249.2.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jenkins-ci.plugins.icon-shim/icon-set/1.0.5/dedc76ac61797dafc66f31e8507d65b98c9e57df/icon-set-1.0.5.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jenkins-ci.main/remoting/4.5/b9d2f267f3c052c01576f10781a26ecd415cad77/remoting-4.5.jar" />
@@ -309,13 +300,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.3.0-alpha5/51f567b6fa8285e0958dea86399441830ffc2ae9/logback-core-1.3.0-alpha5-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.bertramlabs.plugins:morpheus-java-sdk:0.3.4-202101071035">
+    <library name="Gradle: com.bertramlabs.plugins:morpheus-java-sdk:0.3.4-202101151733">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/morpheus-java-sdk/0.3.4-202101071035/morpheus-java-sdk-0.3.4-202101071035.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/morpheus-java-sdk/0.3.4-202101151733/morpheus-java-sdk-0.3.4-202101151733.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/morpheus-java-sdk/0.3.4-202101071035/morpheus-java-sdk-0.3.4-202101071035-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/morpheus-java-sdk/0.3.4-202101151733/morpheus-java-sdk-0.3.4-202101151733-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.github.jnr:jffi:1.2.17">
@@ -927,6 +918,33 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.5.1/2aab83661676c842d50995fe934550e3e23b3c6/httpmime-4.5.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: org.apache.logging.log4j:log4j-api:2.11.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.11.0/bede79a3f150711634a3047985517431bf6499f2/log4j-api-2.11.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.11.0/97f6fb29d69b48fe4bdb47cc21c834b4536cf752/log4j-api-2.11.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: org.apache.logging.log4j:log4j-core:2.11.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.11.0/e6b751e02120c08702d98750f6a80bc25343b7f5/log4j-core-2.11.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.11.0/932392dc515dae4e750ac4a96c39ba69d5e81db3/log4j-core-2.11.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.11.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-slf4j-impl/2.11.0/9ba207b78e470fe7765ebee14f1f0336c9cbcc18/log4j-slf4j-impl-2.11.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-slf4j-impl/2.11.0/eaf7016f6df9069dbc295a9c7a5d6424a1f237c2/log4j-slf4j-impl-2.11.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: org.apache.sshd:sshd-core:1.7.0">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.sshd/sshd-core/1.7.0/2e8b14f6d841b098e46bf407b6fdccab4c19fa41/sshd-core-1.7.0.jar!/" />
@@ -934,15 +952,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.sshd/sshd-core/1.7.0/e66d272a29d3f5628615a0b334bb2bf01d01dff1/sshd-core-1.7.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.apiguardian:apiguardian-api:1.0.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apiguardian/apiguardian-api/1.0.0/3ef5276905e36f4d8055fe3cb0bdcc7503ffc85d/apiguardian-api-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apiguardian/apiguardian-api/1.0.0/777508fa9f3e03cafb3c1fb2eba3dca317f4b1ee/apiguardian-api-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.brotli:dec:0.1.2">
@@ -1438,42 +1447,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jruby.ext.posix/jna-posix/1.0.3-jenkins-1/6db28e25ff7cc381a66cb669e49a5a8d3f9d5068/jna-posix-1.0.3-jenkins-1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.junit.jupiter:junit-jupiter-api:5.4.2">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.4.2/665d1c0daecb26c6210c872768000b417e7e52b6/junit-jupiter-api-5.4.2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.4.2/a9df56f0d77553e469fbcc0b5cb2e3b01d3b24fe/junit-jupiter-api-5.4.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.4.2">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.4.2/4d10922ce4d9c4e22cef8ff5386cb273b9f12281/junit-jupiter-engine-5.4.2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.4.2/f108e9dae10699cebc1e0dcf3323ff3a749a49ed/junit-jupiter-engine-5.4.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.junit.platform:junit-platform-commons:1.4.2">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.4.2/37993dc807ca253aa347be8968a0ae7b70642dbc/junit-platform-commons-1.4.2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.4.2/2e434692947b66671a53b7ec887d50688dc61baf/junit-platform-commons-1.4.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.junit.platform:junit-platform-engine:1.4.2">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.4.2/52b70561f65bb397b054876f2d8c6f30b06c3581/junit-platform-engine-1.4.2.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.4.2/877d768e61adbafa5760c7d5bba5e43510784a0c/junit-platform-engine-1.4.2-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: org.jvnet.hudson:commons-jelly-tags-define:1.0.1-hudson-20071021">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jvnet.hudson/commons-jelly-tags-define/1.0.1-hudson-20071021/8b952d0e504ee505d234853119e5648441894234/commons-jelly-tags-define-1.0.1-hudson-20071021.jar!/" />
@@ -1722,15 +1695,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjdk.jmh/jmh-generator-annprocess/1.22/f866b89e8cd56e2b22c8d630701882fb0fd00062/jmh-generator-annprocess-1.22-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.opentest4j:opentest4j:1.1.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.1.1/efd9f971e91074491ea55b19f67b13470cf4fcdd/opentest4j-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.1.1/88a3a2cb15c413565462cea99f201b67bc6d2f10/opentest4j-1.1.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.ow2.asm:asm-analysis:5.0.3">

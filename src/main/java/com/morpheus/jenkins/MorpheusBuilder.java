@@ -14,19 +14,23 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
-import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-@Slf4j
 public class MorpheusBuilder extends Builder {
 
-	protected String applianceUrl;
+    private final static Logger log = LoggerFactory.getLogger(MorpheusBuilder.class);
+
+    protected String applianceUrl;
 	protected String username;
 	protected String password;
 	protected String accessToken;
@@ -130,6 +134,16 @@ public class MorpheusBuilder extends Builder {
             String gitCommit = variables.get("GIT_COMMIT");
             if(this.userVersion != null && !this.userVersion.trim().isEmpty()) {
                 deployVersion = this.userVersion;
+                if(this.userVersion.startsWith("${") && this.userVersion.endsWith("}")) {
+                    Pattern parameterEntry = Pattern.compile("\\$\\{(.*?)\\}");
+                    Matcher matchPattern = parameterEntry.matcher(this.userVersion);
+                    while(matchPattern.find()) {
+                        log.info("matchPattern.group(1) :: {}", matchPattern.group(1));
+                        if(variables.containsKey(matchPattern.group(1))) {
+                            deployVersion = variables.get(matchPattern.group(1));
+                        }
+                    }
+                }
             } else if(gitCommit != null && !gitCommit.trim().isEmpty()) {
                 log.info("gitCommit :: {}", gitCommit);
                 deployVersion = gitCommit;
