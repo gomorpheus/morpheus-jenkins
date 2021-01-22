@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db93cf6f-b4ce-4671-8eb8-2455c3a92ee0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/morpheus-jenkins.iws" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/morpheus-jenkins.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/morpheus-jenkins.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/morpheus/jenkins/MorpheusBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/morpheus/jenkins/MorpheusBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,6 +180,17 @@
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
@@ -363,7 +370,7 @@
       <workItem from="1610405258175" duration="48000" />
       <workItem from="1610737760497" duration="13627000" />
       <workItem from="1611039029979" duration="606000" />
-      <workItem from="1611252373331" duration="4635000" />
+      <workItem from="1611252373331" duration="9516000" />
     </task>
     <servers />
   </component>

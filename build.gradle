@@ -69,7 +69,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.3.4-202101151733"
+    compile "com.bertramlabs.plugins:morpheus-java-sdk:0.3.3"
 
     compile "org.apache.logging.log4j:log4j-api:2.11.0"
     compile "org.apache.logging.log4j:log4j-core:2.11.0"
