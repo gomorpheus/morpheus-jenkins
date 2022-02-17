@@ -101,7 +101,6 @@ public class MorpheusBuilder extends Builder {
 	@Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
         log.debug("Performing Morpheus Client authentication this.applianceUrl :: {}", this.applianceUrl);
-        log.info("this.accessToken :: {}", this.accessToken);
         if(this.accessToken != null && !this.accessToken.trim().isEmpty()) {
             this.credentialsProvider = new AccessTokenProvider(this.accessToken);
         } else {
